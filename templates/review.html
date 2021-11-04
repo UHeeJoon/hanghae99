@@ -1,0 +1,442 @@
+<!--
+로그인 후 두번째 페이지에서
+
+
+
+
+
+-->
+<!Doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--    제이쿼리 및 부트스트랩    -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+        <title>{{ word }} 리뷰</title>
+        <!--      meta date      -->
+        <meta property="og:title" content="2호선 뭐먹지?"/>
+        <meta property="og:description" content="'2호선 뭐먹지?'에서 맛집을 찾아드립니다."/>
+        <meta property="og:image" content="{{ url_for('static', filename='subway.png') }}"/>
+
+        <!--    main css    -->
+        <link rel="stylesheet" href="../static/css/main.css"/>
+
+        <!--    구글폰트    -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+
+        <style>
+            #modal{
+                font-family: 'Courier New', Courier;
+                font-weight: bold;
+                width: 700px;
+                height: 900px;
+                margin: auto;
+            }
+            .modal_top{
+                position: relative;
+                display: flex;
+            }
+            .store_image{
+                display: block;
+                width: 200px;
+                height: 200px;
+                margin: 15px 15px;
+                border-radius: 30px;
+            }
+            .store_info{
+                margin: auto 15px;
+            }
+            .store_score{
+                margin: 160px 10px 0px 100px;
+            }
+            #store_score_input{
+                width: 100px;
+                height: 80%;
+                font-size: 52px;
+                font-weight: bold;
+                border: none;
+            }
+            .modal_bottom{
+                width: 700px;
+                height: 400px;
+            }
+            .db_table{
+                width: 100%;
+                height: 350px;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+            .db_table thead{
+                display:block;
+                background: linear-gradient(to left, #3CB371 , #FFE4B5);
+                border-radius: 10px;
+                border: 3px solid black;
+                font-size: large;
+            }
+            .db_table tbody{
+                display:block;
+                overflow: auto;
+                width:700px;
+                height: 350px;
+            }
+            .db_table tbody::-webkit-scrollbar {
+                width: 15px;
+            }
+
+            .db_table tbody::-webkit-scrollbar-thumb {
+                background-color: mediumseagreen;
+                border-radius: 20px;
+            }
+
+            .db_table tbody::-webkit-scrollbar-track {
+                background-color: grey;
+                border-radius: 10px;
+                box-shadow: inset 0px 0px 5px white;
+            }
+            .db_table th {
+                padding: 5px;
+                text-align: left;
+            }
+            .db_table td {
+                padding: 10px;
+                text-align: left;
+            }
+            .th_date,.td_date, .th_name, .td_name{
+                width: 120px;
+            }
+            .th_review, .td_review{
+                width: 300px;
+            }
+            .td_score{
+                margin:0;
+            }
+            .go_review{
+                font-weight: bold;
+            }
+            .input_box{
+                position: relative;
+                padding: 5px;
+                margin: 30px auto;
+            }
+            .summit_button{
+                padding: 12px;
+                border-radius: 10px;
+                border: 4px solid;
+                background-color: mediumseagreen;
+                font-weight: bold;
+            }
+            .input_score{
+                padding-left: 100px;
+            }
+            .td_score_input{
+                width: 50px;
+                height: 27px;
+                border: none;
+                font-size: large;
+
+            }
+            #inputReview{
+                position: relative;
+                width: 100%;
+                height: 90px;
+            }
+            #input_top{
+                display: flex;
+                margin-bottom: 7px;
+            }
+            #input_start{
+                display: flex;
+                margin-bottom: 7px;
+            }
+
+        </style>
+        <script>
+            $('#store_score_input').empty()
+                function review_create() {
+                    let inputDate = $('#inputDate').val()
+                    let inputName = $('#inputName').val()
+                    let inputReview = $('textarea[name=inputReview]').val()
+                    let inputScore = $("input[name='point']:checked").val()
+                    let totalPoint = Number(inputScore) + Number($('#store_score_input').val())
+                    let reviewCount = Number($('#db_table >tbody tr').length)
+                    let avgPoint = totalPoint / reviewCount
+
+                    // 내용이 없다면 alert 출력
+                    if (inputDate == "") { alert("날짜를 입력해주세요!")
+                        return;}
+                    if (inputName == "") { alert("닉네임을 입력해주세요!")
+                        return;}
+                    if (inputReview == "") { alert("리뷰를 입력해주세요!")
+                        return;}
+                    if (inputScore == "") { alert("추천점수를 선택해주세요!")
+                        return;}
+                    // 리뷰 작성값들 review db에 저장
+                    let form_data = new FormData()
+                    form_data.append("shop_give", "{{ word }}")
+                    form_data.append("inputDate_give", inputName)
+                    form_data.append("inputName_give", inputReview)
+                    form_data.append("inputReview_give", inputScore)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/review",
+                        data: {
+                            // shop_give: "{{ word }}",
+                            // inputDate_give: inputDate,
+                            // inputName_give: inputName,
+                            // inputReview_give: inputReview,
+                            // inputScore_give: inputScore
+                        },
+                        success: function (response) {
+                            alert(response['msg'])
+                            window.location.href = "/"
+                        }
+                    })
+                    // 평점 restaurant db에 저장
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/restaurantAvgpoint",
+                        data: {
+                            shop_give: "{{ word }}",
+                            avgPoint_give: avgPoint
+                        },
+                            success: function (response) {
+                                alert(response["msg"]);
+                            }
+                    })
+                }
+        </script>
+    </head>
+    <body>
+    <!--  Header  -->
+    <h1 class="logo">
+        <button onclick="location.href='/shop'" id="home" type="button"><i>2호선, 뭐먹지?</i></button>
+    </h1>
+    <div id="header">
+        <div class="nav">
+            {%for station in stations %}
+            <button onclick="location.href='/shop/{{station}}'" id="line1" type="button">{{station}}</button>
+            {% endfor %}
+            <button onclick="location.href='/my/reviews'" id="my_info" type="button">내 정보</button>
+        </div>
+    </div>
+
+    <!--    Review    -->
+    <div id="modal">
+            {% for table in shop %}
+                 {% if table.name == word %}
+                    {% set img_url = table.img_url %}
+                    {% set storeName = table.name %}
+                    {% set address = table.address %}
+                    {% set avgPoint = table.avgPoint %}
+        <div class="modal_top">
+            <div id="apiSet">
+                <img src="{{img_url}}" class="store_image" alt="...">
+                <div class="store_info">
+                    <p class="store_name" id="store_name">{{storeName}}</p>
+                    <p class="store_location" id="store_location">{{address}}</p>
+                    <p class="store_subtitle" id="store_subtitle">{{place}}</p>
+                </div>
+            </div>
+            <div id="store_score" class="store_score">
+                <p id="store_score_input">{{avgPoint}}</p>
+            </div>
+        </div>
+                {% endif %}
+            {% endfor %}
+
+        <!--     리뷰 및 작성창       -->
+        <div class="modal_bottom">
+            <table class="db_table" id="db_table">
+                <thead>
+                <tr>
+                    <th class="th_date" scope="col">리뷰날짜</th>
+                    <th class="th_name" scope="col">닉네임</th>
+                    <th class="th_review" scope="col">리뷰평</th>
+                    <th class="th_score" scope="col">추천</th>
+                </tr>
+                </thead>
+                <tbody id="reviewUpdate">
+                {% for page in review %}
+                    {% if page.shop == word %}
+                        {% set score = page.score %}
+                        {% set review = page.review %}
+                        {% set date = page.date %}
+                        {% set name = page.name %}
+                <tr>
+                    <th class="td_date" scope="row">{{date}}</th>
+                    <td class="td_name">{{name}}</td>
+                    <td class="td_review">{{review}}</td>
+                    <td class="td_score, td_score_input">{{score|int}}</td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">
+                        맛있었다.----------------------------------------------------------------------------------
+                    </td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td_date" scope="row">2021-01-01</th>
+                    <td class="td_name">17조</td>
+                    <td class="td_review">맛있었다.</td>
+                    <td class="td_score">
+                        <input class="td_score_input" type="text" value="5점">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="input_box">
+                <div id="input_start">
+                    <p class="go_review">리뷰 남기기>></p>
+                    <div class="summit_button_div" style="margin-left: 450px ">
+                        <button onclick="review_create()" class="summit_button">리뷰 올리기</button>
+                    </div>
+                </div>
+                <div id="input_top">
+                    <div class="inputDate">
+                        <label for="inputDate">리뷰날짜 : </label>
+                        <input style="border-radius: 10px" type="date" id="inputDate">
+                    </div>
+                    <div class="input_score">
+                        <label for="inputScore">추천 : </label>
+                        <div id="inputScore">
+                            {% for i in range(1,6) %}
+                            <label for="score_{{i}}" class="score" title="{{i}}"><span>{{i}}점</span>
+                                <input type="radio" name="point" id="score_{{i}}" class="star_radio" value="{{i}}">
+                            </label>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="inputName">
+                    <label for="inputName">닉네임 : </label>
+                    <input style="border-radius: 10px" type="text" id="inputName">
+                </div>
+
+                <div class="inputReview">
+                    <label for="inputReview">리뷰평 : </label>
+                    <textarea id="inputReview" style="border-radius: 10px" name="inputReview"> </textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </body>
+
+</html>
