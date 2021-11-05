@@ -53,7 +53,8 @@ def insert_star(url, restaurant):
     res_address = soup.select_one(
         'body > main > article > div.column-wrapper > div.column-contents > div > section.restaurant-detail > table > '
         'tbody > tr:nth-child(1) > td').text
-
+    
+    # 미사용
     like = soup.select_one(
         'body > main > article > div.column-wrapper > div.column-contents > div > section.restaurant-detail > header > div.status > span.cnt.favorite').text
     if like.split(','):
@@ -66,7 +67,7 @@ def insert_star(url, restaurant):
         'img_url': img_url,
         'place': restaurant,
         'address': res_address,
-        'like': like
+        'like': int(0)
     }
     db.restaurant.insert_one(doc)
     print(name, " db에 저장완료 했습니다")
