@@ -39,7 +39,8 @@
                     //공란일경우 return fales
                     console.log(inputReview.length)
                     if(inputReview ==  " " ){
-                        alert("리뷰를 입력해주세요"); return false}
+                        alert("리뷰를 입력해주세요").focus();
+                        return false}
 
                     // 리뷰 작성값들 review db에 저장
                     $.ajax({
