@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>2호선 뭐먹지?</title>
     <!--    제이쿼리 및 부트스트랩    -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <!--      meta date      -->
     <meta property="og:title" content="2호선 뭐먹지?"/>
@@ -36,10 +38,58 @@
             border: 1px solid #2ea969;
             color: #2ea969;
         }
+        .card-body {
+            margin-left: 140px;
+            width: 520px;
+        }
+        .card-title {
+            float: left;
+            width: 50%;
+            font-size: 20px;
+            height: 20px;
+        }
+        .card-text {
+            float: left;
+            width: 50%;
+            height: 20px;
+            font-size: 14px;
+            text-align: right;
+        }
+        .card-desc {
+            float: left;
+            width: 100%;
+            height: 16px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .card-point {
+            float: left;
+            width: 100%;
+            height: 14px;
+            font-size: 12px;
+            margin-top: 10px;
 
+        }
+        .btn-box {
+            margin-top: 15px;
+            float: left;
+            width: 100%;
+        }
+        .btn-box button {
+            padding: 3px 8px;
+            border: 1px solid #aaa;
+            color: #aaa;
+            background:#fff;
+            cursor: pointer;
+        }
+        .btn-box button:hover {
+            border: 1px solid #2ea969;
+            color: #2ea969;
+        }
     </style>
+
 </head>
-<body class="wrap" style="background-image: url(../static/img/back.png)">
+<body class="wrap" style="background: #fff url(../static/img/back.png) no-repeat center;">
 <h1 class="logo" style="padding-top: 50px;">
     <button onclick="location.href='/shop'" id="home" type="button" style="background-color: unset"><i style="font-size: 100px;">내 리뷰</i></button>
 </h1>
@@ -58,13 +108,13 @@
                         <img src="{{review_img}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{review_name}}</h5>
-                            <p class="card-text" style="font-size: 10px; text-align: end">{{review_date}}</p>
-                            <p class="card-text" style="max-height: 24px; overflow: auto">{{review_desc}}</p>
-                            <p class="card-text" style="font-size:11px; text-align: end">그래서 {{review_score}}점을 주셨네요</p>
-                            <div style="display: flex;flex-direction: row; justify-content: space-between;">
-                                <button style="border: none; background-color: unset" onclick="modify_area('{{review_name}}')">수정
+                            <p class="card-text" >{{review_date}}</p>
+                            <p class="card-desc" >{{review_desc}}</p>
+                            <p class="card-point">그래서 {{review_score}}점을 주셨네요</p>
+                            <div class="btn-box" style="display: flex;flex-direction: row; justify-content: space-between;">
+                                <button  onclick="modify_area('{{review_name}}')">수정
                                 </button>
-                                <button style="border: none; background-color: unset"
+                                <button
                                         onclick="delete_area('{{review_name}}','{{review_desc}}')">삭제
                                 </button>
                             </div>
@@ -74,8 +124,9 @@
             {% endfor %}
     {% endfor %}
 </div>
-</body>
 <button onclick="sign_out()" class="sign_out">Log Out</button>
+</body>
+<!--modify_review('{{review_desc}}','{{review_name}}')-->
 <script>
     function modify_area(review_name) {
         let newReview = prompt("리뷰만 수정이 가능합니다.")
