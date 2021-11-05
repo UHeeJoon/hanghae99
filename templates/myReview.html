@@ -21,6 +21,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+    <style>
+        .sign_out {
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 1px solid #aaa;
+            color: #aaa;
+            background:#fff;
+            cursor: pointer;
+        }
+        .sign_out:hover {
+            border: 1px solid #2ea969;
+            color: #2ea969;
+        }
+
+    </style>
 </head>
 <body class="wrap" style="background-image: url(../static/img/back.png)">
 <h1 class="logo" style="padding-top: 50px;">
@@ -43,7 +60,7 @@
                             <h5 class="card-title">{{review_name}}</h5>
                             <p class="card-text" style="font-size: 10px; text-align: end">{{review_date}}</p>
                             <p class="card-text" style="max-height: 24px; overflow: auto">{{review_desc}}</p>
-                            <p class="card-text" style="font-size:11px; text-align: end">그래서 {{review_score}}점이네요</p>
+                            <p class="card-text" style="font-size:11px; text-align: end">그래서 {{review_score}}점을 주셨네요</p>
                             <div style="display: flex;flex-direction: row; justify-content: space-between;">
                                 <button style="border: none; background-color: unset" onclick="modify_area('{{review_name}}')">수정
                                 </button>
@@ -58,7 +75,7 @@
     {% endfor %}
 </div>
 </body>
-<!--modify_review('{{review_desc}}','{{review_name}}')-->
+<button onclick="sign_out()" class="sign_out">Log Out</button>
 <script>
     function modify_area(review_name) {
         let newReview = prompt("리뷰만 수정이 가능합니다.")
@@ -98,6 +115,11 @@
         else {
             alert("입력해주세요!")
         }
+    }
+    function sign_out() {
+        $.removeCookie('mytoken', {path: '/'});
+        alert('로그아웃!')
+        window.location.href = "/login"
     }
 </script>
 </html>
