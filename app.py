@@ -113,25 +113,6 @@ def line():
     return render_template('line_choice.html', stations=stations)
 
 
-# 리뷰 페이지
-@app.route('/review/<keyword>', methods=['GET'])
-def review(keyword):
-    shop = db.restaurant.find_one({"name": keyword}, {"_id": False})
-    review = list(db.restaurant_review.find({"shop": keyword}, {"_id": False}))
-    place = list(db.restaurant.find({}, {'_id': False}))
-
-    a = []
-    stations = []
-
-    for re in place:
-        a.append(re['place'])
-    for re in a:
-        if re not in stations:
-            stations.append(re)
-
-    return render_template('review.html', shop=shop, word=keyword, review=review, stations=stations)
-
-
 # line_base.html
 # 로고 클릭시 전부 송출
 @app.route('/shop', methods=['GET'])
@@ -151,6 +132,20 @@ def all():
     length = len(titles)
     for i in range(length - 1, -1, -1):
         title.append(titles[i])
+
+    for sh in shop:
+        allScore = list(db.restaurant_review.find({'shop': sh['name']}))
+        point = []
+        if not allScore:
+            average = 0
+        else:
+            for score in allScore:
+                point.append(score['score'])
+                intPoint = list(map(int, point))
+                sumPoint = sum(intPoint)
+            result = sumPoint / len(point)
+            average = f'{result: .1f}'
+        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})
 
     return render_template('line_base.html', shop=shop, title=title, stations=stations)
 
@@ -173,11 +168,46 @@ def line1(keyword2):
     for i in range(length-1, -1, -1):
         title.append(titles[i])
     shop = list(db.restaurant.find({'place': keyword2}).sort('like', -1))
+
+    # 리뷰 점수 업데이트
+    for sh in shop:
+        allScore = list(db.restaurant_review.find({'shop': sh['name']}))
+        point = []
+        if not allScore:
+            average = 0
+        else:
+            for score in allScore:
+                point.append(score['score'])
+                intPoint = list(map(int, point))
+                sumPoint = sum(intPoint)
+            result = sumPoint / len(point)
+            average = f'{result: .1f}'
+        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})
+
     return render_template('line_base.html', shop=shop, title=title, stations=stations)
 
 
 # 평점0점 초기화
 # db.restaurant.update_many({},{'$set':{'like':0}})
+
+
+# 리뷰 페이지
+@app.route('/review/<keyword>', methods=['GET'])
+def review(keyword):
+    shop = db.restaurant.find_one({"name": keyword}, {"_id": False})
+    review = list(db.restaurant_review.find({"shop": keyword}, {"_id": False}))
+    place = list(db.restaurant.find({}, {'_id': False}))
+
+    array = []
+    stations = []
+
+    for re in place:
+        array.append(re['place'])
+    for re in array:
+        if re not in stations:
+            stations.append(re)
+
+    return render_template('review.html', shop=shop, word=keyword, review=review, stations=stations)
 
 
 # 리뷰작성
