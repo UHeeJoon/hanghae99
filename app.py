@@ -290,8 +290,8 @@ def review_create():
         "score": score_receive,
         "shop": shop_receive,
         "date": date_receive,
-        "img": img_receive,
-        "user": user_name
+        "img" : img_receive,
+        "user" : user_name
     }
     db.restaurant_review.insert_one(doc)
     station = list(db.restaurant.find({}, {'_id': False}))
@@ -299,7 +299,6 @@ def review_create():
         if shop_receive == re['name']:
             current_station = re['place']
     shop = list(db.restaurant.find({'place': current_station}).sort('like', -1))
-    print(shop)
     # 리뷰 점수 업데이트
     for sh in shop:
         allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
@@ -314,7 +313,6 @@ def review_create():
             result = sumPoint / len(point)
             average = f'{result: .1f}'
 
-        print(average)
         db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
 
     return jsonify({'msg': '리뷰가 저장 되었습니다!!'})

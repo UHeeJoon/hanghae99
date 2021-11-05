@@ -23,7 +23,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
- <script type="text/javascript">
+        <script type="text/javascript">
                 function review_create() {
                         //날짜 생성 함수
                     let today = new Date();
@@ -35,14 +35,11 @@
 
 
                     let inputScore = Number($("input[name='point']:checked").val())
-                    let inputReview = $('input[name=inputReview]').val()
+                    let inputReview = $('textarea[name=inputReview]').val()
                     //공란일경우 return fales
-                    if($('#inputReview').val().length===0){ alert("리뷰를 입력해주세요").foucs();return false}
-                    if (0 < inputScore && inputScore < 6 ) {
-                        window.location.reload()
-                    } else {
-                        alert("평점을 입력해주세요");return false
-                    }
+                    console.log(inputReview.length)
+                    if(inputReview ==  " " ){
+                        alert("리뷰를 입력해주세요"); return false}
 
                     // 리뷰 작성값들 review db에 저장
                     $.ajax({
@@ -91,7 +88,7 @@
                 <p id="hideimg" style="display: none">{{ shop_image }}</p>
                 <div class="store_info">
                     <img src="{{ shop_image }}" class="store_image" alt="...">
-                    <p class="store_name" id="store_name" >{{ shop_name }}</p>
+                    <p class="store_name" id="store_name">{{ shop_name }}</p>
                     <p class="store_location" id="store_location">{{ shop_address }}</p>
                     <p id="store_score_input">{{ shop_like }}점</p>
                 </div>
@@ -151,7 +148,7 @@
                                 <input type="radio" name="point" id="score_4" class="star_radio" value="4">
                             </label>
                             <label for="score_5" class="score" title="5"><span>5점</span>
-                                <input type="radio" name="point" id="score_5" class="star_radio" value="5">
+                                <input type="radio" name="point" id="score_5" class="star_radio" value="5" checked>
                             </label>
                         </div>
                     </div>
