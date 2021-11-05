@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="전역 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/line_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/line_base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/review.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +205,7 @@
       <workItem from="1635913152871" duration="41327000" />
       <workItem from="1635985538360" duration="27512000" />
       <workItem from="1636070195534" duration="5275000" />
-      <workItem from="1636078663302" duration="27403000" />
+      <workItem from="1636078663302" duration="28119000" />
     </task>
     <task id="LOCAL-00001" summary="별점 평균내서 업로드 기능 추가">
       <created>1636075200160</created>
@@ -235,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636105041226</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="전역 업데이트">
+      <created>1636108889413</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1636108889413</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

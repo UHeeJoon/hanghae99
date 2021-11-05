@@ -22,12 +22,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
-    <script>
-        function my_locate(){
-            document.getElementById("line1").style="background-color:white; color : black"
-        }
-    </script>
-
 </head>
 <body>
 
@@ -60,8 +54,8 @@
                         {% set page_score = page.score %}
                         {% set page_review = page.reviews %}
                         {% set page_shop = page.shop %}
-                        <p class="review" style="max-height:26px; overflow: hidden">"{{page_review}}"</p>
-                        <p class="point">{{shop_like}}점</p>
+                        <p class="review" style="max-height:26px; overflow: hidden;font-weight: bold">"{{page_review}}"</p>
+                        <p class="point" style="font-weight: bold">{{shop_like}}점</p>
                     {% break %}
                     {% endif %}
                 {%endfor%}
