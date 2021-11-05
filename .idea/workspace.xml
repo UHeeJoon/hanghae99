@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="로그아웃 버튼 추가">
+    <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="최종 업데이트">
+      <change afterPath="$PROJECT_DIR$/static/img/ogimage.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myReview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant_init.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,9 +55,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -205,7 +206,8 @@
       <workItem from="1635913152871" duration="41327000" />
       <workItem from="1635985538360" duration="27512000" />
       <workItem from="1636070195534" duration="5275000" />
-      <workItem from="1636078663302" duration="35340000" />
+      <workItem from="1636078663302" duration="35760000" />
+      <workItem from="1636120437533" duration="2448000" />
     </task>
     <task id="LOCAL-00001" summary="별점 평균내서 업로드 기능 추가">
       <created>1636075200160</created>
@@ -270,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636115989777</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="최종 업데이트">
+      <created>1636119930085</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1636119930085</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +303,8 @@
     <MESSAGE value="전역 업데이트" />
     <MESSAGE value="title 수정" />
     <MESSAGE value="로그아웃 버튼 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="로그아웃 버튼 추가" />
+    <MESSAGE value="최종 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="최종 업데이트" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/_$restaurant_init.coverage" NAME="restaurant_init Coverage Results" MODIFIED="1635922867430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../2호선 파이썬파일" />

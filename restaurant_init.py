@@ -76,7 +76,6 @@ def insert_star(url, restaurant):
 #데이터 db 저장 함수
 
 def insert_all():
-    db.restaurant.drop()
     for i in range(0, len(restaurants_list)):
         urls = get_urls(restaurants_list[i])
         for url in urls[0]:
