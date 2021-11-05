@@ -13,6 +13,7 @@ SECRET_KEY = 'SPARTA'
 
 
 client = MongoClient('localhost', 27017)
+
 db = client.dbteamsparta
 
 
