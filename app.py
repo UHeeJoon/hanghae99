@@ -210,7 +210,6 @@ def line1(keyword2):
         title.append(titles[i])     # 리뷰 역 정렬
 
     shop = list(db.restaurant.find({'place': keyword2}).sort('like', -1))       # like 역순으로 모든 식당 데이터 shop[]에 생성
-
     # 리뷰 점수 업데이트
     for sh in shop:
         allScore = list(db.restaurant_review.find({'shop': sh['name']}))        # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
@@ -242,19 +241,21 @@ def review(keyword):
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-    shop = list(db.restaurant.find({'place': keyword}).sort('like', -1))
-
     array = []
     stations = []
     station = list(db.restaurant.find({}, {'_id': False}))
     title = list(db.restaurant_review.find({}, {"_id": False}))
+    current_station = 0
     for re in station:
         array.append(re['place'])
+        if keyword == re['name']:
+            current_station = re['place']
+
     for re in array:
         if re not in stations:
             stations.append(re)
-
     # 리뷰 점수 업데이트
+    shop = list(db.restaurant.find({'place': current_station}).sort('like', -1))
     for sh in shop:
         allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
         point = []
@@ -293,16 +294,18 @@ def review_create():
         "user": user_name
     }
     db.restaurant_review.insert_one(doc)
-
-    shop = list(db.restaurant.find({'place': shop_receive}).sort('like', -1))
-
+    station = list(db.restaurant.find({}, {'_id': False}))
+    for re in station:
+        if shop_receive == re['name']:
+            current_station = re['place']
+    shop = list(db.restaurant.find({'place': current_station}).sort('like', -1))
+    print(shop)
     # 리뷰 점수 업데이트
     for sh in shop:
         allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
         point = []
         if not allScore:
-            average = 0  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
-            print(average)
+            average = score_receive  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
         else:
             for score in allScore:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
                 point.append(score['score'])

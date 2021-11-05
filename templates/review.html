@@ -35,7 +35,6 @@
                     let img = $('#hideimg').text()
                     let inputScore = Number($("input[name='point']:checked").val())
                     let inputReview = $('textarea[name=inputReview]').val()
-
                     // 리뷰 작성값들 review db에 저장
                     $.ajax({
                         type: "POST",
