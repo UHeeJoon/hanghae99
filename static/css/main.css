@@ -126,10 +126,12 @@
             /*Line_base css*/
 
             #list_wrap {
-                background: url("../img/back.png");
                 width: 800px;
                 height: 500px;
                 margin: auto;
+            }
+            #list_wrap.on {
+                background:#fff;
             }
             .logo button {
                 font-family: 'Gugi', cursive;
@@ -204,6 +206,7 @@
                 margin: auto;
                 margin-top: 30px;
                 overflow: auto;
+                margin-bottom: 30px;
             }
             #list-box img {
                 display: block;

@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{{ word }} 리뷰</title>
         <!--    제이쿼리 및 부트스트랩    -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
         <!--      meta date      -->
         <meta property="og:title" content="2호선 뭐먹지?"/>
@@ -35,8 +36,6 @@
                     let inputScore = Number($("input[name='point']:checked").val())
                     let inputReview = $('textarea[name=inputReview]').val()
 
-                    console.log(img, inputReview, inputScore)
-
                     // 리뷰 작성값들 review db에 저장
                     $.ajax({
                         type: "POST",
@@ -51,7 +50,6 @@
                         },
                         success: function (response) {
                             alert(response['msg'])
-
                         }
                     })
                     window.location.reload()
@@ -126,7 +124,7 @@
             </table>
             <div class="input_box">
                 <div id="input_start">
-                    <p class="go_review">리뷰 남기기 &gt&gt</p>
+                    <p class="go_review">리뷰 남기기>></p>
                 </div>
                 <div id="input_top">
                     <div class="input_score">

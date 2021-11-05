@@ -302,6 +302,7 @@ def review_create():
         point = []
         if not allScore:
             average = 0  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
+            print(average)
         else:
             for score in allScore:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
                 point.append(score['score'])
@@ -309,6 +310,8 @@ def review_create():
                 sumPoint = sum(intPoint)
             result = sumPoint / len(point)
             average = f'{result: .1f}'
+
+        print(average)
         db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
 
     return jsonify({'msg': '리뷰가 저장 되었습니다!!'})
@@ -322,13 +325,15 @@ def review_show():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         aa = [user_info]
+        my_reviews = list(db.restaurant_review.find({}, {"_id": False}))
+        return render_template('myReview.html', review=my_reviews, user=aa)
+
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-    my_reviews = list(db.restaurant_review.find({}, {"_id": False}))
-    return render_template('myReview.html', review=my_reviews, user=aa)
+
 
 
 # 리뷰 수정

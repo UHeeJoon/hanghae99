@@ -22,35 +22,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 </head>
-<body class="wrap">
+<body class="wrap" style="background-image: url(../static/img/back.png)">
 <h1 class="logo" style="padding-top: 50px;">
     <button onclick="location.href='/shop'" id="home" type="button" style="background-color: unset"><i style="font-size: 100px;">내 리뷰</i></button>
 </h1>
 <div id="list-box">
     {% for table in review %}
-    {% set review_name = table.shop %}
-    {% set review_img = table.img %}
-    {% set review_desc = table.reviews %}
-    <div class="card mb-3" >
-        <img src="{{review_img}}" class="card-img-top" alt="...">
-        <div class="card-body" style="height: 100%; display: flex;flex-direction: column; justify-content: space-between">
-            <h5 class="card-title">{{review_name}}</h5>
-            <p class="card-text" style="max-height:48px; overflow:auto">{{review_desc}}</p>
-            <div style="display: flex;flex-direction: row; justify-content: space-between;" >
-                <button style="border: none; background-color: unset" onclick="modify_area('{{review_name}}')">수정
-                </button>
-                <button style="border: none; background-color: unset" onclick="delete_area('{{review_name}}','{{review_desc}}')">삭제
-                </button>
-            </div>
-        </div>
-    </div>
+        {% set review_name = table.shop %}
+        {% set review_user = table.user %}
+        {% set review_img = table.img %}
+        {% set review_desc = table.reviews %}
+        {% set review_score = table.score %}
+        {% set review_date = table.date %}
+            {% for admin in user %}
+                {% set admin_name = admin.username %}
+                    {% if admin_name == review_user %}
+                    <div class="card mb-3">
+                        <img src="{{review_img}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{review_name}}</h5>
+                            <p class="card-text" style="font-size: 10px; text-align: end">{{review_date}}</p>
+                            <p class="card-text" style="max-height: 24px; overflow: auto">{{review_desc}}</p>
+                            <p class="card-text" style="font-size:11px; text-align: end">그래서 {{review_score}}점이네요</p>
+                            <div style="display: flex;flex-direction: row; justify-content: space-between;">
+                                <button style="border: none; background-color: unset" onclick="modify_area('{{review_name}}')">수정
+                                </button>
+                                <button style="border: none; background-color: unset"
+                                        onclick="delete_area('{{review_name}}','{{review_desc}}')">삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+            {% endfor %}
     {% endfor %}
 </div>
 </body>
 <!--modify_review('{{review_desc}}','{{review_name}}')-->
 <script>
     function modify_area(review_name) {
-        let newReview = prompt()
+        let newReview = prompt("리뷰만 수정이 가능합니다.")
         modify_review(newReview, review_name)
     }
     function delete_area(review_name, review_desc){
