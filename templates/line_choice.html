@@ -21,6 +21,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+    <script>
+            // 각 역별 value값을 받아서 onclick 이벤트에 할당
+            $(document).ready(function (){
+                $('.line_btn').click(function(){
+                    let lines = $(this).attr('value');
+                    let line_name = "/shop/" + lines + "역"
+                    console.log(line_name)
+                    document.getElementById("line_btn").onclick = location.href=line_name
+                });
+            })
+        </script>
 </head>
 <body>
 <!--  Choice page  -->

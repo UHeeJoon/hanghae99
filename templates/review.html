@@ -47,10 +47,11 @@
                             reviews_give: inputReview,
                             score_give : inputScore,
                             date_give: dateString,
+                            user_give :"{{ user_info['username'] }}"
                         },
                         success: function (response) {
                             alert(response['msg'])
-                            window.location.reload()
+
                         }
                     })
                     window.location.reload()
@@ -79,18 +80,15 @@
                     {% set shop_name = table.name %}
                     {% set shop_address = table.address %}
                     {% set shop_like = table.like %}
-        <div class="modal_top">
+       <div class="modal_top">
             <div id="apiSet">
                 <p id="hideimg" style="display: none">{{ shop_image }}</p>
-                <img src="{{ shop_image }}" class="store_image" alt="...">
                 <div class="store_info">
+                    <img src="{{ shop_image }}" class="store_image" alt="...">
                     <p class="store_name" id="store_name">{{ shop_name }}</p>
                     <p class="store_location" id="store_location">{{ shop_address }}</p>
-                    <p class="store_subtitle" id="store_subtitle"></p>
+                    <p id="store_score_input">{{ shop_like }}점</p>
                 </div>
-            </div>
-            <div id="store_score" class="store_score">
-                <p id="store_score_input">{{ shop_like }}점</p>
             </div>
         </div>
                 {% endif %}
@@ -113,9 +111,10 @@
                         {% set review_score = page.score %}
                         {% set review_review = page.reviews %}
                         {% set review_date = page.date %}
+                        {% set review_name = page.user %}
                         <tr>
                             <th class="td_date" scope="row" style="color: black">{{ review_date }}</th>
-                            <td class="td_name">닉네임</td>
+                            <td class="td_name">{{ review_name }}</td>
                             <td class="td_review">{{ review_review }}</td>
                             <td class="td_score td_score_input">{{ review_score }}점</td>
                         </tr>
@@ -127,7 +126,7 @@
             </table>
             <div class="input_box">
                 <div id="input_start">
-                    <p class="go_review">&lt&lt리뷰 남기기&gt&gt</p>
+                    <p class="go_review">리뷰 남기기 &gt&gt</p>
                 </div>
                 <div id="input_top">
                     <div class="input_score">
@@ -145,8 +144,8 @@
                             <label for="score_4" class="score" title="4"><span>4점</span>
                                 <input type="radio" name="point" id="score_4" class="star_radio" value="4">
                             </label>
-                            <label for="score_5" class="score" title="5" ><span>5점</span>
-                                <input type="radio" name="point" id="score_5" class="star_radio" value="5" checked>
+                            <label for="score_5" class="score" title="5"><span>5점</span>
+                                <input type="radio" name="point" id="score_5" class="star_radio" value="5">
                             </label>
                         </div>
                     </div>

@@ -30,46 +30,48 @@
 <body>
 
 <!--   Header   -->
-<h1 class="logo">
-    <button onclick="location.href='/shop'" id="home" type="button"><i>2호선, 뭐먹지?</i></button>
-</h1>
-<div id="header">
-    <div class="nav">
-        {%for station in stations %}
-        <button onclick="location.href='/shop/{{station}}'" id="line1" type="button">{{station}}</button>
+    <h1 class="logo">
+        <button onclick="location.href='/shop'" id="home" type="button"><i>2호선, 뭐먹지?</i></button>
+    </h1>
+    <div id="header">
+        <div class="nav">
+            {%for station in stations %}
+            <button onclick="location.href='/shop/{{station}}'" id="line1" type="button">{{station}}</button>
+            {% endfor %}
+            <button onclick="location.href='/my/reviews'" id="my_info" type="button">내 정보</button>
+     </div>
+    </div>
+    <!--    shop list    -->
+    <div id="list_wrap">
+    <div id="list-box">
+        {% for table in shop %}
+            {% set shop_image = table.img_url %}
+            {% set shop_name = table.name %}
+            {% set shop_address = table.address %}
+            {% set shop_like = table.like %}
+            <div class="card">
+                <img src="{{ shop_image }}" alt="">
+                <p class="name">{{ shop_name }}</p>
+                <p class="place">{{ shop_address }}</p>
+                {% for page in title %}
+                    {% if page.shop == table.name %}
+                        {% set page_score = page.score %}
+                        {% set page_review = page.reviews %}
+                        {% set page_shop = page.shop %}
+                        <p class="review" style="max-height:26px; overflow: hidden">"{{page_review}}"</p>
+                        <p class="point">{{shop_like}}점</p>
+                    {% break %}
+                    {% endif %}
+                {%endfor%}
+                {% if table.like == 0 %}
+                <p class="review">첫 리뷰를 달아주세요!!</p>
+                <p class="point">0점</p>
+                {% endif %}
+                <a onclick="location.href='/review/{{ shop_name }}'" class="review_btn">자세히보기</a>
+            </div>
         {% endfor %}
-        <button onclick="location.href='/my/reviews'" id="my_info" type="button">내 정보</button>
     </div>
-</div>
-<!--    shop list    -->
-<div id="list-box">
-    {% for table in shop %}
-    {% set shop_image = table.img_url %}
-    {% set shop_name = table.name %}
-    {% set shop_address = table.address %}
-    {% set shop_like = table.like %}
-    <div class="card">
-        <img src="{{ shop_image }}" alt="">
-        <p class="name">{{ shop_name }}</p>
-        <p class="place">{{ shop_address }}</p>
-        {% for page in title %}
-        {% if page.shop == table.name %}
-        {% set page_score = page.score %}
-        {% set page_review = page.reviews %}
-        {% set page_shop = page.shop %}
-        <p class="review">"{{page_review}}"</p>
-        <p class="point">{{shop_like}}점</p>
-        {% break %}
-        {% endif %}
-        {%endfor%}
-        {% if table.like == 0 %}
-        <p class="review">첫 리뷰를 달아주세요!!</p>
-        <p class="point">0점</p>
-        {% endif %}
-        <a onclick="location.href='/review/{{ shop_name }}'" class="review_btn">자세히보기</a>
     </div>
-    {% endfor %}
-</div>
 </body>
 </html>
 
