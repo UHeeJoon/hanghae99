@@ -319,7 +319,7 @@ def review_show():
 # 리뷰 수정
 @app.route('/my/review/modify', methods=['POST'])
 def review_modify():
-    review_id = request.form['review_id']       # myReivew 페이지로부터 해당 리뷰 아이디 가져옴
+    review_id = request.form['review_id']       # myReivew 페이지로부터 해당 리뷰 주소를 가져옴
     newReview = request.form["newReview"]       # myReivew 페이지로부터 업데이트 리뷰 내용을 가져옴
     db.restaurant_review.update_one({'_id': ObjectId(review_id)}, {'$set': {'reviews': newReview}})      # 해당 내용 리뷰 db에서 업데이트
     return jsonify({'msg': '수정이 완료되었습니다!'})
@@ -328,11 +328,11 @@ def review_modify():
 # 리뷰 제거
 @app.route('/my/review/delete', methods=['POST'])
 def review_delete():
-    review_name = request.form["review_name"]       # myReivew 페이지로부터 삭제할 식당 이름을 가져옴
-    review_desc = request.form["review_desc"]       # myReivew 페이지로부터 삭제할 리뷰 내용을 가져옴
-    db.restaurant_review.delete_one({'shop': review_name, 'reviews': review_desc})      # 해당 내용을 리뷰 db에서 삭제함
+    review_id = request.form["review_id"]       # myReivew 페이지로부터 해당 리뷰 주소를 가져옴
+    db.restaurant_review.delete_one({'_id': ObjectId(review_id)})      # 해당 주소를 db에서 삭제함
 
     # 리뷰 점수 업데이트
+    review_name = request.form["review_name"]  # myReivew 페이지로부터 점수를 업데이트할 식당 이름을 가져옴
     allScore = list(db.restaurant_review.find({'shop': review_name}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
     point = []
     if not allScore:

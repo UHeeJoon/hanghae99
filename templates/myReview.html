@@ -116,7 +116,7 @@
                                 <button  onclick="modify_area('{{review_id}}')">수정   <!-- 수정 버튼에 리뷰 가게 이름 전송하는 이벤트 -->
                                 </button>
                                 <button
-                                        onclick="delete_area('{{review_name}}','{{review_desc}}')">삭제   <!-- 삭제 버튼에 가게 이름과 리뷰내용 전송하는 이벤트 -->
+                                        onclick="delete_area('{{review_id}}','{{review_name}}')">삭제   <!-- 삭제 버튼에 가게 이름과 리뷰내용 전송하는 이벤트 -->
                                 </button>
                             </div>
                         </div>
@@ -133,17 +133,17 @@
         let newReview = prompt("리뷰만 수정이 가능합니다.")            // prompt()에 수정할 내용 newReview에 초기화
         modify_review(newReview, review_id)
     }
-    function delete_area(review_name, review_desc){
+    function delete_area(review_id, review_name){
         let newReview = confirm("삭제 하시겠습니까?")                 // 삭제 여부 확인
         if(newReview)                                              // 참이면 실행
-            delete_review(review_name, review_desc)
+            delete_review(review_id, review_name)
     }
 
-    function delete_review(review_name, review_desc) {
+    function delete_review(review_id, review_name) {
         $.ajax({
             type: "POST",
             url: "/my/review/delete",
-            data: {review_name: review_name, review_desc: review_desc},         // 삭제할 가게 이름과 리뷰 내용 전송
+            data: {review_id: review_id, review_name: review_name},         // 삭제할 가게 이름과 리뷰 내용 전송
             success: function (response) {
                 alert(response["msg"])
                 window.location.reload()                                    //새로고침
@@ -152,11 +152,11 @@
     }
 
     function modify_review(newReview, review_id) {
-        if (newReview !== null && newReview !== "") {
+        if (newReview !== null && newReview !== "") {                       // 공란이 아니거나 newReview값이 true면 실행
             $.ajax({
                 type: "POST",
                 url: "/my/review/modify",
-                data: {newReview: newReview, review_id: review_id},
+                data: {newReview: newReview, review_id: review_id},         // 새로운 리뷰와 해당 리뷰의 고유 아이디 전달
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()

@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="readme 작성">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myReview.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +212,7 @@
       <workItem from="1636127434607" duration="1377000" />
       <workItem from="1636128911781" duration="65000" />
       <workItem from="1636155710078" duration="910000" />
-      <workItem from="1636157332958" duration="12566000" />
+      <workItem from="1636157332958" duration="13216000" />
     </task>
     <task id="LOCAL-00001" summary="별점 평균내서 업로드 기능 추가">
       <created>1636075200160</created>
@@ -346,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636169367501</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="readme 작성">
+      <created>1636170844965</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1636170844965</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
