@@ -6,11 +6,11 @@
 <ol type="1">
     <li> 크롤링
         <ul>
-            <li>망고플레이트라는 사이트에서 2호선의 역중 14개의 역을 임이로 선정해 크롤링해서 DB에 저장시켰습니다
+            <li>망고플레이트라는 사이트에서 2호선의 역중 14개의 역을 임의로 선정해 크롤링해서 DB에 저장시켰습니다
 
 ![crowling](static/img/readME/crowling.jpg)<br><br><br>
         </ul>
-    <li> 리뷰 페이지에서 내 리뷰를 모아서볼 수 있고 수정 및 삭제가 가능하게 하였습니다
+    <li> 리뷰 페이지에서 내 리뷰를 모아서볼 수 있고 수정 및 삭제를 가능하게 하였습니다
         <ul>
             <li>myReview 리뷰 모아보기</li>
         
@@ -24,7 +24,7 @@ DB에 해당 리뷰의 id값에 있는 기존 리뷰를 입력한 새로운 리�
     <li>삭제 기능 입니다</li>
 
 ![modify](static/img/readME/delete.jpg)
-
+삭제 버튼을 누르면 해당 리뷰가 들어있는 DB에서 고유의 주소(_id)를 지움으로서 특정 리뷰를 삭제하는 기능을 만들었습니다
 ![modify](static/img/readME/delete2.png)
         </ul>
 </oi>

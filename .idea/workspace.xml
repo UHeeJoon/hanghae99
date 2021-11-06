@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="readme 작성">
+    <list default="true" id="06247771-6e4e-4049-b133-11be9bf2f156" name="Changes" comment="리뷰삭제기능 오류 해결">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myReview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +211,7 @@
       <workItem from="1636127434607" duration="1377000" />
       <workItem from="1636128911781" duration="65000" />
       <workItem from="1636155710078" duration="910000" />
-      <workItem from="1636157332958" duration="13216000" />
+      <workItem from="1636157332958" duration="13588000" />
     </task>
     <task id="LOCAL-00001" summary="별점 평균내서 업로드 기능 추가">
       <created>1636075200160</created>
@@ -354,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636170844965</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="리뷰삭제기능 오류 해결">
+      <created>1636171516214</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1636171516214</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -386,7 +392,8 @@
     <MESSAGE value="업데이트" />
     <MESSAGE value="중복된 리뷰 수정 안되는 버그 수정" />
     <MESSAGE value="readme 작성" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme 작성" />
+    <MESSAGE value="리뷰삭제기능 오류 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="리뷰삭제기능 오류 해결" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/_$restaurant_init.coverage" NAME="restaurant_init Coverage Results" MODIFIED="1635922867430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../2호선 파이썬파일" />
