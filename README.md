@@ -1,13 +1,36 @@
 # hanghae99
-17조 팀프로젝트
+<h1>17조 팀프로젝트</h1>
 
-restaurant_init.py를 먼저 실행 시킨뒤에 
-app.py를 실행시켜 주세요!!
+<h3>17조 팀프로젝트에서 제가 맡았던 역활은 <b><i>크롤링, myReview페이지 제작</i></b> 을 대표로 맡았습니다</h3>
+
+1. 크롤링
+![crolling](static/img/readME/crolling.jpg)
+망고플레이트라는 사이트에서 크롤링해서 DB에 저장시켰습니다<br><br><br>
+2. 리뷰 페이지에서 내 리뷰를 모아서볼 수 있고 수정 및 삭제가 가능하게 하였습니다
+<ul>
+    <li>myReview 리뷰 모아보기</li>
+
+![myReview](static/img/readME/myReview.jpg)
+
+<li>수정</li>
+
+![modify](static/img/readME/modify.jpg)
+
+![modify](static/img/readME/modify2.jpg)
+
+<li>삭제 기능 입니다</li>
+
+![modify](static/img/readME/delete.jpg)
+
+![modify](static/img/readME/delete2.png)
+</ul>
 
 
-이 프로젝트는 항해 99 1주차 조별 과제 입니다
-저희 조는 2호선 뭐 먹지라는 2호선 근처의 맛집을 소개하는 페이지입니다 <br>
-초기에 2호선의 51개 역에 해당하는 데이터로 하려고 하였으나 한정적인 시간에 너무 방대한 데이터를 다루게되면
-문제가 생길 수 있음을 우려하여 14역으로 축약하였습니다.<br>
-역 선택에는 별다른 의미는 없으면 제작자의 임의로 선정했습니다. <br>
-웹 개발 초보자들이 5일이라는 시간동안 만든 작품이라는 점을 감안하여 좋게 봐주시면 감사하겠습니다.
+
+
+
+
+
+
+
+
