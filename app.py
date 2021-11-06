@@ -11,7 +11,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-
+# client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient('localhost', 27017)
 
 db = client.dbteamsparta
@@ -86,22 +86,6 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-# 회원 정보 저장
-
-@app.route('/api/Register', methods=['POST'])
-def register_create():
-    regUserName_receive = request.form["regUserName_give"]  # 받아온 아이디
-    regPassword_receive = request.form["regPassword_give"]  # 받아온 비밀번호
-
-    doc = {
-        "regUserName": regUserName_receive,  # 아이디
-        "regPassword": regPassword_receive  # 비밀번호
-    }
-    db.Register.insert_one(doc)     # db에 사용자 정보 저장
-
-    return jsonify({'result': 'success', 'msg': '화원정보가 저장됨'})
-
-
 # 선택화면 렌더링
 @app.route('/line', methods=['GET'])
 def line():
@@ -144,37 +128,37 @@ def all():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
     # ///////////////////////////////////////////////////////////////////////////
 
-    shop = list(db.restaurant.find({}, {'_id': False}).sort('like', -1))    # 모든 식당 정보 like가 많은 순으로 shop[] 생성
-    titles = list(db.restaurant_review.find({}, {"_id": False}))            # 모든 리뷰 정보 title[]에 생성
+    shop = list(db.restaurant.find({}, {'_id': False}).sort('like', -1))  # 모든 식당 정보 like가 많은 순으로 shop[] 생성
+    titles = list(db.restaurant_review.find({}, {"_id": False}))  # 모든 리뷰 정보 title[]에 생성
 
     array = []
     for sh in shop:
-        array.append(sh['place'])       # 모든 전철역 array[]에 .append
+        array.append(sh['place'])  # 모든 전철역 array[]에 .append
 
     stations = []
     for ar in array:
         if ar not in stations:
-            stations.append(ar)         # 중복을 제거한 모든 전철역 station[]에 .append
+            stations.append(ar)  # 중복을 제거한 모든 전철역 station[]에 .append
 
     title = []
     length = len(titles)
     for i in range(length - 1, -1, -1):
-        title.append(titles[i])     # 리뷰 역 정렬
+        title.append(titles[i])  # 리뷰 역 정렬
 
     # 리뷰 점수 업데이트
     for sh in shop:
-        allScore = list(db.restaurant_review.find({'shop': sh['name']}))    # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
+        allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
         point = []
-        if not allScore:        # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
+        if not allScore:  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
             average = 0
-        else:                   # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
+        else:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
             for score in allScore:
                 point.append(score['score'])
                 intPoint = list(map(int, point))
                 sumPoint = sum(intPoint)
             result = sumPoint / len(point)
             average = f'{result: .1f}'
-        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})     # 해당 식당 db에 average 업데이트
+        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
 
     return render_template('line_base.html', shop=shop, title=title, stations=stations)
 
@@ -193,39 +177,39 @@ def line1(keyword2):
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
     # /////////////////////////////////////////////////////////////////////////////
 
-    app.jinja_env.add_extension('jinja2.ext.loopcontrols')          # jinja에 break를 쓰기위한 코드
-    station = list(db.restaurant.find({}, {'_id': False}))          # 모든 데이터 호출 station에 저장
-    titles = list(db.restaurant_review.find({}, {"_id": False}))    # 모든 리뷰 데이터 호출 titles에 저장
+    app.jinja_env.add_extension('jinja2.ext.loopcontrols')  # jinja에 break를 쓰기위한 코드
+    station = list(db.restaurant.find({}, {'_id': False}))  # 모든 데이터 호출 station에 저장
+    titles = list(db.restaurant_review.find({}, {"_id": False}))  # 모든 리뷰 데이터 호출 titles에 저장
 
     array = []
     for re in station:
-        array.append(re['place'])   # 모든 전철역 array[]에 .append
+        array.append(re['place'])  # 모든 전철역 array[]에 .append
 
     stations = []
     for re in array:
         if re not in stations:
-            stations.append(re)     # 중복을 제거한 모든 전철역 station[]에 .append
+            stations.append(re)  # 중복을 제거한 모든 전철역 station[]에 .append
 
     title = []
     length = len(titles)
     for i in range(length - 1, -1, -1):
-        title.append(titles[i])     # 리뷰 역 정렬
+        title.append(titles[i])  # 리뷰 역 정렬
 
-    shop = list(db.restaurant.find({'place': keyword2}).sort('like', -1))       # like 역순으로 모든 식당 데이터 shop[]에 생성
+    shop = list(db.restaurant.find({'place': keyword2}).sort('like', -1))  # like 역순으로 모든 식당 데이터 shop[]에 생성
     # 리뷰 점수 업데이트
     for sh in shop:
-        allScore = list(db.restaurant_review.find({'shop': sh['name']}))        # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
+        allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
         point = []
         if not allScore:
-            average = 0         # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
+            average = 0  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
         else:
-            for score in allScore:      # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
+            for score in allScore:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
                 point.append(score['score'])
                 intPoint = list(map(int, point))
                 sumPoint = sum(intPoint)
             result = sumPoint / len(point)
             average = f'{result: .1f}'
-        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})     # 해당 식당 db에 average 업데이트
+        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
 
     return render_template('line_base.html', shop=shop, title=title, stations=stations)
 
@@ -287,13 +271,13 @@ def review_create():
     img_receive = request.form["img_give"]
     user_name = request.form["user_give"]
 
-    doc ={
+    doc = {
         "reviews": reviews_receive,
         "score": score_receive,
         "shop": shop_receive,
         "date": date_receive,
-        "img" : img_receive,
-        "user" : user_name
+        "img": img_receive,
+        "user": user_name
     }
     db.restaurant_review.insert_one(doc)
     station = list(db.restaurant.find({}, {'_id': False}))
@@ -323,58 +307,50 @@ def review_create():
 # 리뷰 보기
 @app.route('/my/reviews', methods=['GET'])
 def review_show():
-    token_receive = request.cookies.get('mytoken')
+    # 시간 만료시 자동 로그아웃
+    token_receive = request.cookies.get('mytoken')                              # 쿠키에서 토큰을 가져옴
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])   # 현 사용자 정보
+        user_info = db.users.find_one({"username": payload["id"]})              # 현 사용자의 아이디를 가져옴
         aa = [user_info]
-        my_reviews = list(db.restaurant_review.find({}, {"_id": False}))
+        my_reviews = list(db.restaurant_review.find({}, {"_id": False}))        # 모든 리뷰 db에 있는 내용을 myReview.html로 전송
         return render_template('myReview.html', review=my_reviews, user=aa)
 
-    except jwt.ExpiredSignatureError:
+    except jwt.ExpiredSignatureError:                                           # 로그인 시간 초과
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-
-
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))     # 잘못된 경로로 조회
+    # /////////////////////////////////////////////////////////////////////
 
 # 리뷰 수정
 @app.route('/my/review/modify', methods=['POST'])
 def review_modify():
-    review_desc = request.form["review_desc"]
-    review_name = request.form["review_name"]
-    db.restaurant_review.update_one({'shop': review_name}, {'$set': {'reviews': review_desc}})
+    review_desc = request.form["review_desc"]       # myReivew 페이지로부터 업데이트 리뷰 내용을 가져옴
+    review_name = request.form["review_name"]       # myReivew 페이지로부터 업데이트할 식당 이름을 가져옴
+    db.restaurant_review.update_one({'shop': review_name}, {'$set': {'reviews': review_desc}})      # 해당 내용 리뷰 db에서 업데이트
     return jsonify({'msg': '수정이 완료되었습니다!'})
 
 
 # 리뷰 제거
 @app.route('/my/review/delete', methods=['POST'])
 def review_delete():
-    review_name = request.form["review_name"]
-    review_Length = list(db.restaurant_review.find({"shop": review_name}))
+    review_name = request.form["review_name"]       # myReivew 페이지로부터 삭제할 식당 이름을 가져옴
+    review_desc = request.form["review_desc"]       # myReivew 페이지로부터 삭제할 리뷰 내용을 가져옴
+    db.restaurant_review.delete_one({'shop': review_name, 'reviews': review_desc})      # 해당 내용을 리뷰 db에서 삭제함
 
-    if len(review_Length) == 1:  ## 마지막 리뷰를 지우면 평점 0으로 초기화
-        db.restaurant.update_one({"name": review_name}, {'$set': {'like': 0}})
-    review_desc = request.form["review_desc"]
-    db.restaurant_review.delete_one({'shop': review_name, 'reviews': review_desc})
-
-    shop = list(db.restaurant.find({'name': review_name}).sort('like', -1))
     # 리뷰 점수 업데이트
-    for sh in shop:
-        allScore = list(db.restaurant_review.find({'shop': sh['name']}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
-        point = []
-        if not allScore:
-            average = 0  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
-        else:
-            for score in allScore:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
-                point.append(score['score'])
-                intPoint = list(map(int, point))
-                sumPoint = sum(intPoint)
-            result = sumPoint / len(point)
-            average = f'{result: .1f}'
-        db.restaurant.update_one({'name': sh['name']}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
-
+    allScore = list(db.restaurant_review.find({'shop': review_name}))  # 해당 식당에 해당하는 리뷰 정보 allScore[] 생성
+    point = []
+    if not allScore:
+        average = 0  # 해당 식당에 리뷰가 없으면 평점 0으로 초기화
+    else:
+        for score in allScore:  # 해당 식당에 리뷰가 있으면 (총 별점의 합/ 리뷰의 개수)으로 평점 average 생성
+            point.append(score['score'])
+            intPoint = list(map(int, point))
+            sumPoint = sum(intPoint)
+        result = sumPoint / len(point)
+        average = f'{result: .1f}'
+    db.restaurant.update_one({'name': review_name}, {'$set': {'like': average}})  # 해당 식당 db에 average 업데이트
 
     return jsonify({'msg': '삭제가 완료되었습니다!'})
 
