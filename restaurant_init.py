@@ -6,8 +6,8 @@ from pymongo import MongoClient
 # 필요한 역 크롤링한 결과 db에 저장
 
 client = MongoClient('localhost', 27017)
-
-db = client.dbteamsparta
+client = MongoClient('mongodb://test:test@localhost', 27017)
+# db = client.dbteamsparta
 
 restaurants_list = ['까치산역', '신도림역', '사당역', '강남역', '잠실역', '건대입구역', '성수역',
                     '신설동역', '왕십리역', '신당역', '을지로4가역', '시청역', '홍대입구역', '영등포구청역']

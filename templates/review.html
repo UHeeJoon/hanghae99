@@ -37,10 +37,12 @@
                     let inputScore = Number($("input[name='point']:checked").val())
                     let inputReview = $('textarea[name=inputReview]').val()
                     //공란일경우 return fales
-                    console.log(inputReview.length)
-                    if(inputReview ==  " " ){
-                        alert("리뷰를 입력해주세요").focus();
-                        return false}
+                         if($('#inputReview').val().length===0){ alert("리뷰를 입력해주세요").foucs();return false}
+                    if (0 < inputScore && inputScore < 6) {
+                        window.location.reload()
+                    }  else {
+                        alert("평점을 입력해주세요");return false
+                    }
 
                     // 리뷰 작성값들 review db에 저장
                     $.ajax({
@@ -156,7 +158,7 @@
                 </div>
                 <div class="inputReview">
                     <label for="inputReview">리뷰평 : </label>
-                    <textarea id="inputReview" style="border-radius: 10px" name="inputReview"> </textarea>
+                    <textarea id="inputReview" style="border-radius: 10px;" name="inputReview"> </textarea>
                 </div>
                 <div class="summit_button_div" style="margin-left:580px ">
                         <button onclick="review_create()" class="summit_button">리뷰 올리기</button>
