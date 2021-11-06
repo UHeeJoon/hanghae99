@@ -211,7 +211,7 @@
       <workItem from="1636127434607" duration="1377000" />
       <workItem from="1636128911781" duration="65000" />
       <workItem from="1636155710078" duration="910000" />
-      <workItem from="1636157332958" duration="11087000" />
+      <workItem from="1636157332958" duration="12566000" />
     </task>
     <task id="LOCAL-00001" summary="별점 평균내서 업로드 기능 추가">
       <created>1636075200160</created>
@@ -339,7 +339,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636169185265</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="readme 작성">
+      <created>1636169367501</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1636169367501</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
