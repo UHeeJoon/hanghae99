@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -29,13 +30,6 @@ def home():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-
-## 로그인 페이지
-@app.route('/login')
-def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
 
 
 ## 로그인 api
@@ -313,7 +307,7 @@ def review_show():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])   # 현 사용자 정보
         user_info = db.users.find_one({"username": payload["id"]})              # 현 사용자의 아이디를 가져옴
         aa = [user_info]
-        my_reviews = list(db.restaurant_review.find({}, {"_id": False}))        # 모든 리뷰 db에 있는 내용을 myReview.html로 전송
+        my_reviews = list(db.restaurant_review.find({}))        # 모든 리뷰 db에 있는 내용을 myReview.html로 전송
         return render_template('myReview.html', review=my_reviews, user=aa)
 
     except jwt.ExpiredSignatureError:                                           # 로그인 시간 초과
@@ -325,9 +319,9 @@ def review_show():
 # 리뷰 수정
 @app.route('/my/review/modify', methods=['POST'])
 def review_modify():
-    review_desc = request.form["review_desc"]       # myReivew 페이지로부터 업데이트 리뷰 내용을 가져옴
-    review_name = request.form["review_name"]       # myReivew 페이지로부터 업데이트할 식당 이름을 가져옴
-    db.restaurant_review.update_one({'shop': review_name}, {'$set': {'reviews': review_desc}})      # 해당 내용 리뷰 db에서 업데이트
+    review_id = request.form['review_id']       # myReivew 페이지로부터 해당 리뷰 아이디 가져옴
+    newReview = request.form["newReview"]       # myReivew 페이지로부터 업데이트 리뷰 내용을 가져옴
+    db.restaurant_review.update_one({'_id': ObjectId(review_id)}, {'$set': {'reviews': newReview}})      # 해당 내용 리뷰 db에서 업데이트
     return jsonify({'msg': '수정이 완료되었습니다!'})
 
 
